@@ -1,0 +1,36 @@
+name: Build signed AAB (Google Play)
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - run: npm install
+      - run: node scripts/prepare.js
+      - run: npx cap add android
+      - run: npx @capacitor/assets generate --android
+      - run: npx cap sync android
+      - name: Bump versionCode
+        run: sed -i "s/versionCode 1/versionCode ${{ github.run_number }}/" android/app/build.gradle
+      - run: cd android && chmod +x gradlew && ./gradlew bundleRelease
+      - name: Sign the bundle
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          echo "$KEYSTORE_BASE64" | base64 -d > release.jks
+          jarsigner -keystore release.jks -storepass "$KEYSTORE_PASSWORD" -keypass "$KEY_PASSWORD" -sigalg SHA256withRSA -digestalg SHA-256 -signedjar app-release-signed.aab android/app/build/outputs/bundle/release/app-release.aab "$KEY_ALIAS"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shinui-katan-aab
+          path: app-release-signed.aab
