@@ -32,10 +32,11 @@ input[type=checkbox]{width:auto}.ck{display:flex;align-items:center;gap:8px;marg
 .mt{font-weight:700;margin:20px 0 6px}.g7{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;text-align:center}.g7 i{font-style:normal;font-size:12px;color:var(--mut)}
 .g7 span{aspect-ratio:1;display:grid;place-items:center;border-radius:6px;font-size:13px;background:var(--card)}.g7 .g{background:var(--okb)}.g7 .r{background:var(--nob)}.g7 .z{background:none}
 #sp{position:fixed;inset:0;z-index:99;background:#0f766e;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:32px;text-align:center;transition:opacity .45s}#sp img{width:128px;height:128px}#sp p{margin:0;font:700 20px/1.35 Heebo,system-ui,sans-serif;max-width:320px}
+.dws{display:flex;flex-wrap:wrap;gap:6px}.chip{display:inline-flex;margin:0;font-size:14px;color:var(--tx)}.chip input{display:none}.chip span{padding:8px 12px;border:1px solid var(--bd);border-radius:20px;background:var(--card)}.chip input:checked+span{background:var(--pri);border-color:var(--pri);color:var(--bg)}.hint{margin:8px 0 0;color:var(--mut);font-size:14px}
 </style></head><body><div id=sp><img src="icons/icon-192.png" alt=""><p id=spt></p></div><header id=h></header><main id=v></main><nav id=n></nav><button class=fab id=f onclick="go('new')">+</button>
 <script>
-const T={he:{app:'שינוי קטן בהתחלה = שינוי גדול בהמשך',stats:'סטטיסטיקות',main:'ראשי',acc:'צבירות',none:'אין מטרות עדיין. לחצו על + כדי להוסיף מטרה.',fh:'שעות',fd:'יומי',fw:'שבועי',fm:'חודשי',fy:'שנתי',new:'מטרה חדשה',name:'שם המטרה',freq:'תדירות',from:'מתאריך',to:'עד תאריך',unl:'ללא הגבלה',bt:'סוג בונוס/קנס',money:'כסף',pts:'נקודות',oth:'אחר',on:'שם הבונוס',bonus:'בונוס בהצלחה',pen:'קנס באי הצלחה',ok:'אישור',set:'הגדרות',cal:'סוג תאריך',heb:'עברי',greg:'לועזי',cur:'מטבע',curo:'שם המטבע',def:'ברירת מחדל לריבוע',emp:'ריק',lang:'שפה',about:'אודות האפליקציה',del:'מחיקת מטרה',cd:'למחוק את המטרה וכל ההיסטוריה שלה?',wk:'שבוע של',wd:['א','ב','ג','ד','ה','ו','ש'],nr:'הוסיפו שם למטרה',empt:'אין עדיין נתונים',stt:'יתחיל ב',ended:'הסתיים',de:'תאריך הסיום לפני תאריך ההתחלה'},
-en:{app:'A small change at the start = a big change later',stats:'Statistics',main:'Home',acc:'Totals',none:'No goals yet. Tap + to add one.',fh:'Hourly',fd:'Daily',fw:'Weekly',fm:'Monthly',fy:'Yearly',new:'New goal',name:'Goal name',freq:'Frequency',from:'Start date',to:'End date',unl:'No limit',bt:'Bonus/penalty type',money:'Money',pts:'Points',oth:'Other',on:'Bonus name',bonus:'Bonus when done',pen:'Penalty when missed',ok:'Save',set:'Settings',cal:'Date type',heb:'Hebrew',greg:'Gregorian',cur:'Currency',curo:'Currency name',def:'Default checkbox state',emp:'Empty',lang:'Language',about:'About',del:'Delete goal',cd:'Delete this goal and all its history?',wk:'Week of',wd:['S','M','T','W','T','F','S'],nr:'Enter a goal name',empt:'No data yet',stt:'Starts',ended:'Ended',de:'End date is before start date'},fr:{app:'Un petit changement au départ = un grand changement ensuite',stats:'Statistiques',main:'Accueil',acc:'Totaux',none:'Aucun objectif pour l’instant. Appuyez sur + pour en ajouter un.',fh:'Horaire',fd:'Quotidien',fw:'Hebdomadaire',fm:'Mensuel',fy:'Annuel',new:'Nouvel objectif',name:'Nom de l’objectif',freq:'Fréquence',from:'Date de début',to:'Date de fin',unl:'Sans limite',bt:'Type de bonus/pénalité',money:'Argent',pts:'Points',oth:'Autre',on:'Nom du bonus',bonus:'Bonus en cas de réussite',pen:'Pénalité en cas d’échec',ok:'Valider',set:'Réglages',cal:'Type de calendrier',heb:'Hébraïque',greg:'Grégorien',cur:'Devise',curo:'Nom de la devise',def:'État par défaut de la case',emp:'Vide',lang:'Langue',about:'À propos',del:'Supprimer l’objectif',cd:'Supprimer cet objectif et tout son historique ?',wk:'Semaine du',wd:['D','L','M','M','J','V','S'],nr:'Saisissez un nom d’objectif',empt:'Pas encore de données',stt:'Commence le',ended:'Terminé',de:'La date de fin précède la date de début'}};
+const T={he:{app:'שינוי קטן בהתחלה = שינוי גדול בהמשך',stats:'סטטיסטיקות',main:'ראשי',acc:'צבירות',none:'אין מטרות עדיין. לחצו על + כדי להוסיף מטרה.',fh:'שעות',fd:'יומי',fw:'שבועי',fm:'חודשי',fy:'שנתי',new:'מטרה חדשה',name:'שם המטרה',freq:'תדירות',from:'מתאריך',to:'עד תאריך',unl:'ללא הגבלה',bt:'סוג בונוס/קנס',money:'כסף',pts:'נקודות',oth:'אחר',on:'שם הבונוס',bonus:'בונוס בהצלחה',pen:'קנס באי הצלחה',ok:'אישור',set:'הגדרות',cal:'סוג תאריך',heb:'עברי',greg:'לועזי',cur:'מטבע',curo:'שם המטבע',def:'ברירת מחדל לריבוע',emp:'ריק',lang:'שפה',about:'אודות האפליקציה',del:'מחיקת מטרה',cd:'למחוק את המטרה וכל ההיסטוריה שלה?',wk:'שבוע של',wd:['א','ב','ג','ד','ה','ו','ש'],nr:'הוסיפו שם למטרה',empt:'אין עדיין נתונים',stt:'יתחיל ב',ended:'הסתיים',de:'תאריך הסיום לפני תאריך ההתחלה',kh:'כל כמה שעות',kw:'כל כמה שבועות',dys:'ימים בשבוע',dn:['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'],nd:'בחרו לפחות יום אחד',mh:'המטרה תופיע פעם בחודש, ביום',off:'לא פעיל היום',ev:'כל',hrs:'שעות',wks:'שבועות',od:'ביום'},
+en:{app:'A small change at the start = a big change later',stats:'Statistics',main:'Home',acc:'Totals',none:'No goals yet. Tap + to add one.',fh:'Hourly',fd:'Daily',fw:'Weekly',fm:'Monthly',fy:'Yearly',new:'New goal',name:'Goal name',freq:'Frequency',from:'Start date',to:'End date',unl:'No limit',bt:'Bonus/penalty type',money:'Money',pts:'Points',oth:'Other',on:'Bonus name',bonus:'Bonus when done',pen:'Penalty when missed',ok:'Save',set:'Settings',cal:'Date type',heb:'Hebrew',greg:'Gregorian',cur:'Currency',curo:'Currency name',def:'Default checkbox state',emp:'Empty',lang:'Language',about:'About',del:'Delete goal',cd:'Delete this goal and all its history?',wk:'Week of',wd:['S','M','T','W','T','F','S'],nr:'Enter a goal name',empt:'No data yet',stt:'Starts',ended:'Ended',de:'End date is before start date',kh:'Every how many hours',kw:'Every how many weeks',dys:'Days of the week',dn:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],nd:'Choose at least one day',mh:'The goal appears once a month, on day',off:'Not active today',ev:'Every',hrs:'hours',wks:'weeks',od:'on day'},fr:{app:'Un petit changement au départ = un grand changement ensuite',stats:'Statistiques',main:'Accueil',acc:'Totaux',none:'Aucun objectif pour l’instant. Appuyez sur + pour en ajouter un.',fh:'Horaire',fd:'Quotidien',fw:'Hebdomadaire',fm:'Mensuel',fy:'Annuel',new:'Nouvel objectif',name:'Nom de l’objectif',freq:'Fréquence',from:'Date de début',to:'Date de fin',unl:'Sans limite',bt:'Type de bonus/pénalité',money:'Argent',pts:'Points',oth:'Autre',on:'Nom du bonus',bonus:'Bonus en cas de réussite',pen:'Pénalité en cas d’échec',ok:'Valider',set:'Réglages',cal:'Type de calendrier',heb:'Hébraïque',greg:'Grégorien',cur:'Devise',curo:'Nom de la devise',def:'État par défaut de la case',emp:'Vide',lang:'Langue',about:'À propos',del:'Supprimer l’objectif',cd:'Supprimer cet objectif et tout son historique ?',wk:'Semaine du',wd:['D','L','M','M','J','V','S'],nr:'Saisissez un nom d’objectif',empt:'Pas encore de données',stt:'Commence le',ended:'Terminé',de:'La date de fin précède la date de début',kh:'Toutes les combien d’heures',kw:'Toutes les combien de semaines',dys:'Jours de la semaine',dn:['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],nd:'Choisissez au moins un jour',mh:'L’objectif apparaît une fois par mois, le',off:'Inactif aujourd’hui',ev:'Toutes les',hrs:'heures',wks:'semaines',od:'le'}};
 let S;try{S=JSON.parse(localStorage.getItem('hb1'))}catch(e){}
 S=S||{goals:[],logs:{},set:{cal:'heb',cur:'₪',curO:'',def:0,lang:'he'}};
 const save=()=>{try{localStorage.setItem('hb1',JSON.stringify(S))}catch(e){}};
@@ -46,17 +47,33 @@ const P=s=>{const[a,b,c]=s.slice(0,10).split('-');return new Date(+a,b-1,+c)};
 const loc=()=>({he:'he-IL',en:'en-GB',fr:'fr-FR'})[S.set.lang]||'en-GB';
 const fmt=(s,o)=>new Intl.DateTimeFormat(loc()+(S.set.cal=='heb'?'-u-ca-hebrew':''),o||{day:'numeric',month:'long',year:'numeric'}).format(P(s));
 const cs=()=>S.set.cur=='other'?S.set.curO:S.set.cur;
-function pk(f,d){d=new Date(d);if(f=='h')return iso(d)+'T'+String(d.getHours()).padStart(2,'0');
-if(f=='w'){d.setDate(d.getDate()-d.getDay());return iso(d)}
-if(f=='m')return iso(new Date(d.getFullYear(),d.getMonth(),1));
-if(f=='y')return d.getFullYear()+'-01-01';return iso(d)}
-function periods(g,max){const o=[],s=pk(g.f,P(g.start));let d=new Date();if(g.end&&P(g.end)<d){d=P(g.end);d.setHours(23)}
-if(P(g.start)>d)return o;
-for(let i=0;i<max;i++){const k=pk(g.f,d);if(k<s)break;o.push(k);
-if(g.f=='h')d.setHours(d.getHours()-1);else if(g.f=='w')d.setDate(d.getDate()-7);else if(g.f=='m'){d.setDate(1);d.setMonth(d.getMonth()-1)}else if(g.f=='y')d.setFullYear(d.getFullYear()-1);else d.setDate(d.getDate()-1)}
+const pad=n=>String(n).padStart(2,'0'),uiso=u=>u.getUTCFullYear()+'-'+pad(u.getUTCMonth()+1)+'-'+pad(u.getUTCDate());
+function periods(g,max){const o=[],f=g.f,N=+g.k||1,s=P(g.start);let e=new Date();if(g.end&&P(g.end)<e){e=P(g.end);e.setHours(23)}
+if(s>e)return o;const Y=d=>Date.UTC(d.getFullYear(),d.getMonth(),d.getDate());
+if(f=='h'){const H=36e5,b=Y(s),t=Date.UTC(e.getFullYear(),e.getMonth(),e.getDate(),e.getHours());
+for(let j=Math.floor((t-b)/H/N)*N;j>=0&&o.length<max;j-=N){const u=new Date(b+j*H);o.push(uiso(u)+'T'+pad(u.getUTCHours()))}}
+else if(f=='w'){const D=864e5,w0=Y(s)-s.getDay()*D;
+for(let j=Math.floor((Y(e)-w0)/D/7/N)*N;j>=0&&o.length<max;j-=N)o.push(uiso(new Date(w0+j*7*D)))}
+else if(f=='m'){const D=g.mo?s.getDate():1,lb=g.mo?s:new Date(s.getFullYear(),s.getMonth(),1);
+const occ=(y,m)=>new Date(y,m,Math.min(D,new Date(y,m+1,0).getDate()));
+let y=e.getFullYear(),m=e.getMonth(),c=occ(y,m);if(c>e){if(--m<0){m=11;y--}c=occ(y,m)}
+while(c>=lb&&o.length<max){o.push(iso(c));if(--m<0){m=11;y--}c=occ(y,m)}}
+else if(f=='y'){for(let y=e.getFullYear();y>=s.getFullYear()&&o.length<max;y--)o.push(y+'-01-01')}
+else{const dw=g.dw;for(let d=new Date(e.getFullYear(),e.getMonth(),e.getDate());d>=s&&o.length<max;d.setDate(d.getDate()-1))if(!dw||dw.includes(d.getDay()))o.push(iso(d))}
 return o}
+function curKey(g){const n=new Date(),td=new Date(n.getFullYear(),n.getMonth(),n.getDate());
+if(P(g.start)>n||(g.end&&P(g.end)<td))return null;const p=periods(g,1)[0];
+if(!p||(g.f=='d'&&g.dw&&p!=iso(n)))return null;return p}
+const why=g=>{const n=new Date(),td=new Date(n.getFullYear(),n.getMonth(),n.getDate());
+return P(g.start)>n?t('stt')+' '+fmt(g.start):g.end&&P(g.end)<td?t('ended'):t('off')};
+function fq(g){const N=+g.k||1,l=t('f'+g.f);
+if(g.f=='h'&&N>1)return t('ev')+' '+N+' '+t('hrs');
+if(g.f=='w'&&N>1)return t('ev')+' '+N+' '+t('wks');
+if(g.f=='d'&&g.dw&&g.dw.length<7)return l+' · '+g.dw.map(d=>t('wd')[d]).join(' ');
+if(g.f=='m'&&g.mo)return l+' · '+t('od')+' '+P(g.start).getDate();
+return l}
 function lbl(g,k){if(k.length>10)return fmt(k)+' '+k.slice(11)+':00';
-if(g.f=='m')return fmt(k,{month:'long',year:'numeric'});if(g.f=='y')return fmt(k,{year:'numeric'});
+if(g.f=='m'&&!g.mo)return fmt(k,{month:'long',year:'numeric'});if(g.f=='y')return fmt(k,{year:'numeric'});
 return g.f=='w'?t('wk')+' '+fmt(k):fmt(k)}
 const val=(g,k)=>(S.logs[g.id]||{})[k]||0;
 const box=(g,k)=>`<button class="bx v${val(g,k)}" onclick="event.stopPropagation();tog('${g.id}','${k}')">${['','V','X'][val(g,k)]}</button>`;
@@ -66,14 +83,14 @@ let V='main',A=null;
 function go(v,a){V=v;A=a;draw();scrollTo(0,0)}
 function setv(k,x){S.set[k]=k=='def'?+x:x;save();draw()}
 function vMain(){const gs=S.goals;
-gs.forEach(g=>{const p=periods(g,1);if(!p.length)return;const k=p[0],L=S.logs[g.id]=S.logs[g.id]||{};if(L[k]===undefined&&S.set.def)L[k]=S.set.def});save();
-return gs.length?gs.map(g=>{const p=periods(g,1);
-const r=p.length?box(g,p[0]):`<span style="color:var(--mut);font-size:13px">${P(g.start)>new Date()?t('stt')+' '+fmt(g.start):t('ended')}</span>`;
-return `<div class=row${p.length?'':' style="opacity:.7"'} onclick="go('det','${g.id}')"><div class=nm>${esc(g.n)}<small>${t('f'+g.f)}</small></div>${r}</div>`}).join(''):`<p class=empty>${t('none')}</p>`}
+gs.forEach(g=>{const k=curKey(g);if(!k)return;const L=S.logs[g.id]=S.logs[g.id]||{};if(L[k]===undefined&&S.set.def)L[k]=S.set.def});save();
+return gs.length?gs.map(g=>{const k=curKey(g);
+const r=k?box(g,k):`<span style="color:var(--mut);font-size:13px">${why(g)}</span>`;
+return `<div class=row${k?'':' style="opacity:.7"'} onclick="go('det','${g.id}')"><div class=nm>${esc(g.n)}<small>${fq(g)}</small></div>${r}</div>`}).join(''):`<p class=empty>${t('none')}</p>`}
 function vDet(){const g=gid(A);if(!g)return'';return periods(g,g.f=='h'?72:90).map(k=>`<div class=row style="cursor:default"><div class=nm>${lbl(g,k)}</div>${box(g,k)}</div>`).join('')+`<button class=btn onclick="go('main')">${t('ok')}</button><button class="btn del" onclick="del('${g.id}')">${t('del')}</button>`}
 function del(id){if(confirm(t('cd'))){S.goals=S.goals.filter(g=>g.id!=id);delete S.logs[id];save();go('main')}}
 function vStats(){return S.goals.length?S.goals.map(g=>{const ps=periods(g,7),w=ps.filter(k=>val(g,k)==1).length,up=ps.length&&w*2>ps.length;
-return `<div class=row onclick="go('gs','${g.id}')"><div class=nm>${esc(g.n)}<small>${t('f'+g.f)}</small></div><div class="arr ${!ps.length?'n':up?'u':'d'}">${!ps.length?'–':up?'↗':'↘'}</div></div>`}).join(''):`<p class=empty>${t('none')}</p>`}
+return `<div class=row onclick="go('gs','${g.id}')"><div class=nm>${esc(g.n)}<small>${fq(g)}</small></div><div class="arr ${!ps.length?'n':up?'u':'d'}">${!ps.length?'–':up?'↗':'↘'}</div></div>`}).join(''):`<p class=empty>${t('none')}</p>`}
 function chart(g){const ps=periods(g,2000).reverse(),N=ps.length;let c=0;
 const pts=ps.map((k,i)=>{if(val(g,k)==1)c++;return[i,c]}),mx=Math.max(c,1),n=Math.max(N-1,1);
 const xy=pts.map(([i,v])=>[10+i/n*280,92-v/mx*80]),d=xy.map(p=>p.map(x=>x.toFixed(1)).join(',')).join(' '),l=xy[xy.length-1]||[10,92];
@@ -100,16 +117,21 @@ ${S.set.cur=='other'?`<label>${t('curo')}</label><input value="${esc(S.set.curO)
 <label>${t('lang')}</label>${sel('lang',[['he','עברית'],['en','English'],['fr','Français']])}
 <div class=row style="margin-top:22px" onclick="go('about')"><div class=nm>${t('about')}</div></div>`}
 function vNew(){return `<label>${t('name')}</label><input id=gn>
-<label>${t('freq')}</label><select id=gf>${['h','d','w','m','y'].map(f=>`<option value=${f}${f=='d'?' selected':''}>${t('f'+f)}</option>`).join('')}</select>
-<label>${t('from')}</label><input type=date id=gs value="${iso(new Date())}">
+<label>${t('freq')}</label><select id=gf onchange="fo()">${['h','d','w','m','y'].map(f=>`<option value=${f}${f=='d'?' selected':''}>${t('f'+f)}</option>`).join('')}</select>
+<div id=gkw hidden><label id=gkl></label><select id=gk></select></div><div id=gdw><label>${t('dys')}</label><div class=dws>${t('dn').map((x,i)=>`<label class=chip><input type=checkbox class=dw value=${i} checked><span>${x}</span></label>`).join('')}</div></div>
+<label>${t('from')}</label><input type=date id=gs value="${iso(new Date())}" onchange="fo()"><div id=gmh class=hint hidden></div>
 <label>${t('to')}</label><div class=ck><input type=checkbox id=gu checked onchange="$('ge').disabled=this.checked"><label for=gu>${t('unl')}</label></div><input type=date id=ge disabled>
 <label>${t('bt')}</label><select id=gt onchange="$('gw').hidden=this.value!='o'"><option value=m>${t('money')}</option><option value=p>${t('pts')}</option><option value=o>${t('oth')}</option></select>
 <div id=gw hidden><label>${t('on')}</label><input id=go></div>
 <label>${t('bonus')}</label><input type=number min=0 step=any id=gb inputmode=decimal>
 <label>${t('pen')}</label><input type=number min=0 step=any id=gp inputmode=decimal>
 <button class=btn onclick="addG()">${t('ok')}</button>`}
+function fo(){const f=$('gf').value,k=$('gk');$('gkw').hidden=!(f=='h'||f=='w');
+if(f=='h'||f=='w'){if(k.dataset.f!=f){k.dataset.f=f;k.innerHTML=Array.from({length:f=='h'?12:10},(_,i)=>`<option>${i+1}</option>`).join('')}$('gkl').textContent=t(f=='h'?'kh':'kw')}
+$('gdw').hidden=f!='d';const m=$('gmh');m.hidden=f!='m';if(f=='m')m.textContent=t('mh')+' '+P($('gs').value||iso(new Date())).getDate()}
 function addG(){const n=$('gn').value.trim();if(!n){alert(t('nr'));return}const s0=$('gs').value||iso(new Date()),e0=$('gu').checked?'':$('ge').value;if(e0&&e0<s0){alert(t('de'));return}
-S.goals.push({id:Date.now().toString(36),n,f:$('gf').value,start:s0,end:e0,bt:$('gt').value,bn:$('go').value.trim(),b:$('gb').value,p:$('gp').value});save();go('main')}
+const fv=$('gf').value;let dw;if(fv=='d'){dw=[...document.querySelectorAll('.dw:checked')].map(x=>+x.value);if(!dw.length){alert(t('nd'));return}if(dw.length==7)dw=undefined}
+S.goals.push({id:Date.now().toString(36),n,f:fv,k:fv=='h'||fv=='w'?+$('gk').value:1,dw,mo:fv=='m'?1:0,start:s0,end:e0,bt:$('gt').value,bn:$('go').value.trim(),b:$('gb').value,p:$('gp').value});save();go('main')}
 function draw(){const he=S.set.lang=='he';document.documentElement.dir=he?'rtl':'ltr';document.documentElement.lang=S.set.lang;
 const tabs=['stats','main','acc'],top=tabs.includes(V);
 const ti={main:t('app'),stats:t('stats'),acc:t('acc'),new:t('new'),set:t('set'),about:t('about'),det:(gid(A)||{}).n,gs:(gid(A)||{}).n}[V]||'';
@@ -117,7 +139,7 @@ const back={det:'main',gs:'stats',new:'main',set:'main',about:'set'}[V];
 $('h').innerHTML=back?`<button onclick="go('${back}')">${he?'›':'‹'}</button><h1>${esc(ti)}</h1><span style="width:36px"></span>`:`<h1>${esc(ti)}</h1>${V=='main'?`<button onclick="go('set')">⚙</button>`:''}`;
 $('n').innerHTML=[['stats','📈'],['main','🏠'],['acc','💰']].map(([k,i])=>`<button class="${V==k||(V=='gs'&&k=='stats')?'on':''}" onclick="go('${k}')"><b>${i}</b>${t(k)}</button>`).join('');
 $('n').hidden=!(top||V=='gs'||V=='det');$('f').hidden=V!='main';
-const R={main:vMain,stats:vStats,acc:vAcc,det:vDet,gs:vGs,set:vSet,new:vNew,about:()=>''};$('v').innerHTML=R[V]()}
+const R={main:vMain,stats:vStats,acc:vAcc,det:vDet,gs:vGs,set:vSet,new:vNew,about:()=>''};$('v').innerHTML=R[V]();if(V=='new')fo()}
 draw();
 $('spt').textContent=t('app');setTimeout(()=>{$('sp').style.opacity=0;setTimeout(()=>$('sp').remove(),500)},2000);
 </script></body></html>
