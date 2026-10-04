@@ -20,6 +20,11 @@ jobs:
       - run: npx cap add android
       - run: npx @capacitor/assets generate --android
       - run: npx cap sync android
+      - name: Fixed signing key and version number
+        run: |
+          mkdir -p ~/.android && cp debug.keystore ~/.android/debug.keystore
+          V=$(grep -o "const VER='[0-9.]*'" www/index.html | grep -o "[0-9][0-9.]*")
+          sed -i "s/versionCode 1/versionCode ${{ github.run_number }}/; s/versionName \"1.0\"/versionName \"$V\"/" android/app/build.gradle
       - run: cd android && chmod +x gradlew && ./gradlew assembleDebug
       - uses: actions/upload-artifact@v4
         with:
